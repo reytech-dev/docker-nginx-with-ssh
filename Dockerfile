@@ -17,19 +17,19 @@ COPY startup.sh /usr/share/startup.sh
 RUN apt-get update && \
     apt-get install --no-install-recommends -y openssh-server && \
     mkdir /var/run/sshd && \
-    addgroup --gid "$GID" "$USER" \
+    addgroup --gid "${GID}" "${USER}" \
     && adduser \
     --disabled-password \
     --gecos "" \
-    --ingroup "$USER" \
-    --uid "$UID" \
-    "$USER" && \
+    --ingroup "${USER}" \
+    --uid "${UID}" \
+    "${USER}" && \
     sed -i 's;#AuthorizedKeysFile     .ssh/authorized_keys .ssh/authorized_keys2;AuthorizedKeysFile     .ssh/authorized_keys;' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
     sed -i 's/#PermitEmptyPasswords no/PermitEmptyPasswords no/' /etc/ssh/sshd_config && \
     sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config && \
     sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config && \
-    mkdir -p "/home/$USER/.ssh" && \
+    mkdir -p "/home/${USER}/.ssh" && \
     echo "${PUB_SSH_KEY}" > "/home/$USER/.ssh/authorized_keys" && \
     # SSH login fix. Otherwise user is kicked off after login
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
