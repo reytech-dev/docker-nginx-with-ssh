@@ -30,7 +30,7 @@ RUN apt-get update && \
     sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config && \
     sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config && \
     mkdir -p "/home/${USER}/.ssh" && \
-    echo "${PUB_SSH_KEY}" > "/home/$USER/.ssh/authorized_keys" && \
+    echo "${PUB_SSH_KEY}" > "/home/${USER}/.ssh/authorized_keys" && \
     # SSH login fix. Otherwise user is kicked off after login
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
     echo "export VISIBLE=now" >> /etc/profile && \
